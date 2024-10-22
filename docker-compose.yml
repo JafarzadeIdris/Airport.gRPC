@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+    distributedcache:
+     image: redis
+
+
+    airport.grpc:
+        image: ${DOCKER_REGISTRY-}airportgrpc
+        build:
+            context: .
+            dockerfile: Airport.gRPC/Dockerfile
