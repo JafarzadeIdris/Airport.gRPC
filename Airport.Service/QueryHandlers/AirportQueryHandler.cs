@@ -1,4 +1,5 @@
 ﻿using Airport.Provider.Provider;
+using Airport.Provider.Repository;
 using Airport.Service.Extensions;
 using Airport.Service.Queries;
 using Common.Core.Queries;
@@ -7,14 +8,14 @@ namespace Airport.Service.Commands
 {
     public class AirportQueryHandler : IQueryHandler<AirportRequest, AirportResponse>
     {
-        private readonly IAirportProvider _airportProvider;
+        private readonly ICachedRepository _cachedRepository;
 
-        public AirportQueryHandler(IAirportProvider airportProvider) => _airportProvider = airportProvider;
+        public AirportQueryHandler(ICachedRepository cachedRepository) => _cachedRepository = cachedRepository;
 
         public async Task<AirportResponse> Handle(AirportRequest request, CancellationToken cancellationToken)
         {
-            var firstAirportResponse = await _airportProvider.GetAirportInfoAsync(request.FirstAirportIATA, cancellationToken);
-            var secondAirportResponse = await _airportProvider.GetAirportInfoAsync(request.SecondAirportIATA, cancellationToken);
+            var firstAirportResponse = await _cachedRepository.GetAsync(request.FirstAirportIATA, cancellationToken);
+            var secondAirportResponse = await _cachedRepository.GetAsync(request.SecondAirportIATA, cancellationToken);
 
             var firstLocation = (firstAirportResponse.Location!.Lat, firstAirportResponse.Location.Lon);
 

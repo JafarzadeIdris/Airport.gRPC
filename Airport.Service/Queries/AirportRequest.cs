@@ -2,4 +2,9 @@
 
 namespace Airport.Service.Queries;
 
-public record AirportRequest(string FirstAirportIATA, string SecondAirportIATA) : IQuery<AirportResponse>{}
+public record AirportRequest : IQuery<AirportResponse>
+{
+    public string FirstAirportIATA { get; set; }
+    public string SecondAirportIATA { set; get; }
+}
+

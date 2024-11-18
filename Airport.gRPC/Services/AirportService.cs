@@ -14,21 +14,14 @@ namespace Airport.gRPC.Services
         }
         public override async Task<AirportReponse> GetDistanceBetweenAirportsByIATA(GetAirportRequest request, ServerCallContext context)
         {
-            try
-            {
+            AirportRequest airportRequest = request.Adapt<AirportRequest>();
 
-                AirportRequest airportRequest = request.BuildAdapter().AdaptToType<AirportRequest>();
+            var response = await _sender.Send(airportRequest);
 
-                var response = await _sender.Send(airportRequest);
+            AirportReponse airportResponse = response.Adapt<AirportReponse>();
 
-                AirportReponse airportResponse = response.Adapt<AirportReponse>();
-
-                return await Task.FromResult(airportResponse);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            return await Task.FromResult(airportResponse);
         }
     }
+
 }
