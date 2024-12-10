@@ -4,7 +4,6 @@ using MediatR;
 
 namespace Airport.gRPC.Services
 {
-
     public class AirportService : Airport.AirportBase
     {
         private readonly ISender _sender;

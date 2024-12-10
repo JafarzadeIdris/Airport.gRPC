@@ -17,9 +17,9 @@ namespace Airport.Provider.Repository
             {
                 return JsonSerializer.Deserialize<AirportModel>(cached)!;
             }
-            var response =await airportProvider.GetAirportInfoAsync(key, cancellationToken);
+            var response = await airportProvider.GetAirportInfoAsync(key, cancellationToken);
             await distributedCache.SetStringAsync(key, JsonSerializer.Serialize(response), cancellationToken);
-           return response;
+            return response;
         }
 
     }
